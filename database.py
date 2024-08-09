@@ -42,7 +42,7 @@ def load_job_from_db(id):
    with engine.connect() as conn:
       result = conn.execute(
          text("select * from jobs where id = :val"),        #means this :val has to be given value of something
-         val = id                                           #here we are specipying the value
+         {'val' : id}                                           #here we are specipying the value
       )
       rows  = result.all()
       column = result.keys()

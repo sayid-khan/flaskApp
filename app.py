@@ -9,7 +9,7 @@ app = Flask(__name__) #we are creating a object of Flask(as app) [becoz flask is
 @app.route("/",methods=["GET"])
 def welcome():
     jobs_list = load_jobs_from_db()
-    return render_template('home.html', jobs = jobs_list, company_name = 'Jovian')
+    return render_template('home.html', jobs = jobs_list)
 
 
 @app.route("/api/jobs")
@@ -21,7 +21,9 @@ def list_jobs():
 @app.route("/job/<id>")   #<id> ->dynamic route
 def show_job(id):
     job = load_job_from_db(id)
-    return jsonify(job)
+    if not job:
+        return "Not found"
+    return render_template('jobpage.html',job = job)
 
 
 if __name__ == "__main__" :
