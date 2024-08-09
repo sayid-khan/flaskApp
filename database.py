@@ -34,3 +34,19 @@ def load_jobs_from_db():
   for row in result_all:
      result_dicts.append(dict(zip(column, row)))
   return result_dicts  
+
+      
+
+
+def load_job_from_db(id):
+   with engine.connect() as conn:
+      result = conn.execute(
+         text("select * from jobs where id = :val"),        #means this :val has to be given value of something
+         val = id                                           #here we are specipying the value
+      )
+      rows  = result.all()
+      column = result.keys()
+      if len(rows) == 0:
+         return None
+      else:
+         return dict(zip(column, rows[0]))
